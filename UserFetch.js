@@ -4,8 +4,17 @@
 
 
 async function fetchUsers(){
-    let data = await fetch("https://jsonplaceholder.typicode.com/users");
-    let response = await data.json()
-    return response.map((n) => n.username)
+    try {
+        let data = await fetch("https://jsonplaceholder.typicode.com/users");
+        if(!data.ok){
+            console.log(`Http Error : ${data.status}`)
+        }
+        let response = await data.json()
+        return response.map((n) => n.username)
+    } catch (error) {
+        console.error(error.message)
+        return []
+    }
+    
 }
 fetchUsers().then((val)=> console.log(val))
